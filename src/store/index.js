@@ -3,14 +3,26 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const state = {
+  user: null
+}
+
 export default new Vuex.Store({
-  state: {
-  },
+  state,
   getters: {
-  },
-  mutations: {
+    user: (state) => {
+      return state.user
+    }
   },
   actions: {
+    user(context, user) {
+      context.commit('user', user)
+    }
+  },
+  mutations: {
+    user(state, user) {
+      state.user = user
+    }
   },
   modules: {
   }

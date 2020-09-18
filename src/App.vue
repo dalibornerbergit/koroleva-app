@@ -1,6 +1,8 @@
 <template>
   <v-app id="app">
-    <Navbar />
+    <div v-if="user">
+      <Navbar />
+    </div>
 
     <v-main class="ma-4">
       <router-view />
@@ -9,11 +11,30 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapGetters } from "vuex";
 import Navbar from "./components/Navbar.vue";
 
 export default {
   components: {
     Navbar,
+  },
+  computed: {
+    ...mapGetters(["user"]),
+  },
+  created() {
+    if (localStorage.getItem("accessToken")) {
+      axios
+        .get("http://127.0.0.1:8000/api/v1/user/", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        })
+        .then((response) => {
+          console.log("User: ", response);
+          this.$store.dispatch("user", response.data);
+        });
+    }
   },
 };
 </script>

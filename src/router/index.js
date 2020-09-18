@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Trainings from '../views/Trainings.vue'
 import Members from '../views/Members.vue'
 import Groups from '../views/Groups.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: '/trainings',
+    name: 'trainings',
+    component: Trainings
   },
   {
     path: '/members',
@@ -21,6 +22,11 @@ const routes = [
     path: '/groups',
     name: 'groups',
     component: Groups
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   }
 ]
 

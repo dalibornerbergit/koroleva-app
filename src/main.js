@@ -4,6 +4,12 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import store from './store'
 
+router.beforeEach((to, from, next) => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  (to.name !== 'login' && !accessToken) ? next({ name: 'login' }) : next();
+})
+
 Vue.config.productionTip = false
 
 new Vue({

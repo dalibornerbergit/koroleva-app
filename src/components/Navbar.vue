@@ -37,27 +37,35 @@
         </v-menu>
       </div>
 
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
+      <span class="grey--text d-none d-sm-flex koroleva py-1 px-2 rounded">{{user.email}}</span>
+
+      <!-- Logout -->
+      <div v-if="user">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on" @click="logOut">
+              <v-icon>mdi-account-circle</v-icon>
+            </v-btn>
+          </template>
+          <span class="red--text">Logout</span>
+        </v-tooltip>
+      </div>
     </v-app-bar>
 
     <!-- Sidebar -->
-    <v-navigation-drawer app v-model="drawer" class="pink lighten-1">
+    <v-navigation-drawer app v-model="drawer" class="red accent-1">
       <v-row class="mt-5">
         <v-col class="d-flex justify-center">
-          <v-avatar size="100">
-            <img src="/avatar.png" alt="INF" />
+          <v-avatar color="transparent" size="100">
+            <img src="/koroleva-circle-rmbg.png" alt="Image not found" />
           </v-avatar>
         </v-col>
-      </v-row>
-      <v-row justify="center">
-        <span class="white--text subtitle-1 mt-1">Dado</span>
       </v-row>
       <v-row class="my-5" justify="center">
         <Popup @projectAdded="snackbar = true" />
       </v-row>
 
+      <!-- List of actions -->
       <v-list>
         <v-list-item v-for="link in links" :key="link.text" link :to="link.route">
           <v-list-item-icon>
@@ -73,6 +81,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Popup from "./Popup";
 
 export default {
@@ -83,13 +92,20 @@ export default {
     drawer: false,
     snackbar: false,
     links: [
-      { icon: "mdi-home", text: "home page", route: "/" },
+      { icon: "mdi-shoe-ballet", text: "trainings", route: "/trainings" },
       { icon: "mdi-account", text: "members", route: "/members" },
       { icon: "mdi-account-group-outline", text: "groups", route: "/groups" },
     ],
   }),
+  computed: {
+    ...mapGetters(["user"]),
+  },
+  methods: {
+    logOut() {
+      localStorage.removeItem("accessToken");
+      this.$store.dispatch("user", null);
+      window.location.href = "/login";
+    },
+  },
 };
 </script>
-
-<style>
-</style>
