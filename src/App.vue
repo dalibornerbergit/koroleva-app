@@ -23,18 +23,19 @@ export default {
     ...mapGetters(["user"]),
   },
   created() {
-    if (localStorage.getItem("accessToken")) {
-      axios
-        .get("http://127.0.0.1:8000/api/v1/user/", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          },
-        })
-        .then((response) => {
-          console.log("User: ", response);
-          this.$store.dispatch("user", response.data);
-        });
-    }
+    axios
+      .get("http://127.0.0.1:8000/api/v1/user", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        console.log("User: ", response);
+        this.$store.dispatch("user", response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

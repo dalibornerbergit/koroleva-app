@@ -9,6 +9,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    redirect: '/trainings'
+  },
+  {
     path: '/trainings',
     name: 'trainings',
     component: Trainings

@@ -40,11 +40,11 @@
       <span class="grey--text d-none d-sm-flex koroleva py-1 px-2 rounded">{{user.email}}</span>
 
       <!-- Logout -->
-      <div v-if="user">
+      <div>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on" @click="logOut">
-              <v-icon>mdi-account-circle</v-icon>
+              <v-icon>mdi-logout</v-icon>
             </v-btn>
           </template>
           <span class="red--text">Logout</span>
@@ -62,7 +62,7 @@
         </v-col>
       </v-row>
       <v-row class="my-5" justify="center">
-        <Popup @projectAdded="snackbar = true" />
+        <AddMember @projectAdded="snackbar = true" />
       </v-row>
 
       <!-- List of actions -->
@@ -82,11 +82,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Popup from "./Popup";
+import AddMember from "./AddMember";
 
 export default {
   components: {
-    Popup,
+    AddMember,
   },
   data: () => ({
     drawer: false,
