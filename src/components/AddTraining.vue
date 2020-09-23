@@ -1,7 +1,15 @@
 <template>
   <v-dialog width="600px" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-if="memberProp" class="grey--text px-0" dark outlined text v-bind="attrs" v-on="on">
+      <v-btn
+        v-if="trainingProp"
+        class="grey--text px-0"
+        dark
+        outlined
+        text
+        v-bind="attrs"
+        v-on="on"
+      >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
       <v-btn
@@ -11,40 +19,14 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-      >Add new member</v-btn>
+      >Add new training</v-btn>
     </template>
 
     <v-card>
-      <v-card-title>
-        <h1 v-if="memberProp" class="title grey--text">Edit member</h1>
-        <h1 v-else class="title grey--text">Add new member</h1>
-      </v-card-title>
+      <v-card-title v-if="trainingProp" class="title grey--text">Edit training</v-card-title>
+      <v-card-title v-else class="title grey--text">Add new training</v-card-title>
       <v-card-text>
         <v-form class="px-3" v-model="valid">
-          <v-text-field
-            label="First Name"
-            v-model="member.first_name"
-            :rules="inputRules"
-            prepend-icon="mdi-account"
-          ></v-text-field>
-          <v-text-field
-            label="Last Name"
-            v-model="member.last_name"
-            :rules="inputRules"
-            prepend-icon="mdi-account"
-          ></v-text-field>
-          <v-text-field
-            label="Phone"
-            v-model="member.phone"
-            :rules="inputRules"
-            prepend-icon="mdi-phone"
-          ></v-text-field>
-          <v-textarea
-            label="Info"
-            v-model="member.record"
-            :rules="inputRules"
-            prepend-icon="mdi-pencil"
-          ></v-textarea>
           <v-menu
             v-model="menu2"
             :close-on-content-click="false"
@@ -55,7 +37,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="member.birth_date"
+                v-model="training.date"
                 :rules="inputRules"
                 label="Birth date"
                 prepend-icon="mdi-calendar"
@@ -64,26 +46,31 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="member.birth_date" @input="menu2 = false"></v-date-picker>
+            <v-date-picker v-model="training.date" @input="menu2 = false"></v-date-picker>
           </v-menu>
+          <v-textarea
+            label="Info"
+            v-model="training.record"
+            :rules="inputRules"
+            prepend-icon="mdi-pencil"
+          ></v-textarea>
           <v-select
             label="Group"
             prepend-icon="mdi-account-group-outline"
-            v-model="member.group_id"
+            v-model="training.group_id"
             :items="groups"
           ></v-select>
-
           <v-card-actions class="px-0">
             <v-spacer></v-spacer>
             <v-btn
-              v-if="memberProp"
+              v-if="trainingProp"
               :disabled="!valid"
               :loading="loading"
               text
               color="info"
               class="mx-0 mt-3"
-              @click="submitEdit(member.id)"
-            >Edit member</v-btn>
+              @click="submitEdit(training.id)"
+            >Edit training</v-btn>
             <v-btn
               v-else
               :disabled="!valid"
@@ -92,7 +79,7 @@
               color="info"
               class="mx-0 mt-3"
               @click="submit"
-            >Add member</v-btn>
+            >Add training</v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -101,20 +88,16 @@
 </template>
 
 <script>
-import moment from "moment";
 import { mapActions } from "vuex";
 
 export default {
   props: {
-    memberProp: Object,
+    trainingProp: Object,
   },
   data: () => ({
-    member: {
-      first_name: "",
-      last_name: "",
-      phone: "",
+    training: {
+      date: "",
       record: "",
-      birth_date: null,
       group_id: null,
     },
     menu2: false,
@@ -124,36 +107,29 @@ export default {
     valid: false,
     inputRules: [(v) => !!v || "Required"],
   }),
-  computed: {
-    formatedDate() {
-      return this.member.date
-        ? moment(String(this.date)).format("DD.MM.YYYY")
-        : "";
-    },
-  },
   created() {
-    if (this.memberProp) this.member = this.memberProp;
+    if (this.trainingProp) this.training = this.trainingProp;
   },
   methods: {
-    ...mapActions(["addMember", "updateMember"]),
+    ...mapActions(["addTraining", "updateTraining"]),
     submit() {
-      this.addMember(this.member);
+      this.addTraining(this.training);
       this.dialog = false;
     },
     submitEdit(id) {
-      const updMember = {
+      const updTraining = {
         id: id,
-        first_name: this.member.first_name,
-        last_name: this.member.last_name,
-        phone: this.member.phone,
-        record: this.member.record,
-        birth_date: this.member.birth_date,
-        group_id: this.member.group_id,
+        date: this.training.date,
+        record: this.training.record,
+        group_id: this.training.group_id,
       };
 
-      this.updateMember(updMember);
+      this.updateTraining(updTraining);
       this.dialog = false;
     },
   },
 };
 </script>
+
+<style>
+</style>

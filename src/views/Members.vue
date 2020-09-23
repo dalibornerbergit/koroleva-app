@@ -6,58 +6,56 @@
       <AddMember />
     </v-row>
 
-    <v-container class="my-5">
+    <v-container v-if="allMembers.data" class="my-5">
+      <v-row justify="center">
+        <v-pagination color="koroleva" v-model="page" :length="allMembers.meta.last_page"></v-pagination>
+      </v-row>
       <v-row>
         <v-col cols="12" sm="6" md="4" lg="3" v-for="member in allMembers.data" :key="member.id">
-          <v-card @dblclick="onDblClick(member)" flat class="text-center ma-3">
+          <v-card flat class="text-center ma-3">
             <div>
-              <v-avatar color="red accent-1" class="mt-4" size="50">
+              <v-avatar color="koroleva" class="mt-4" size="50">
                 <img src="/koroleva-circle-rmbg.png" alt="INF" />
               </v-avatar>
             </div>
             <v-card-text class="text-left">
-              <div class="grey--text">{{member.first_name}}</div>
-              <div class="grey--text">{{member.last_name}}</div>
-              <div class="grey--text">{{member.phone}}</div>
-              <div class="grey--text">{{member.birth_date}}</div>
-              <div class="grey--text">{{member.record}}</div>
-              <div class="grey--text">{{member.group_id}}</div>
+              <div class="grey--text">
+                First Name:
+                <b>{{member.first_name}}</b>
+              </div>
+              <div class="grey--text">
+                Last Name:
+                <b>{{member.last_name}}</b>
+              </div>
+              <div class="grey--text">
+                Phone:
+                <b>{{member.phone}}</b>
+              </div>
+              <div class="grey--text">
+                Birth Date:
+                <b>{{member.birth_date}}</b>
+              </div>
+              <div class="grey--text">
+                Record:
+                <b>{{member.record}}</b>
+              </div>
+              <div class="grey--text">
+                Group:
+                <b>{{member.group_id}}</b>
+              </div>
             </v-card-text>
             <v-card-actions>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    text
-                    color="grey"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-                </template>
-                <span>Update</span>
-              </v-tooltip>
+              <AddMember :memberProp="member" />
               <v-spacer></v-spacer>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    @click="deleteMember(member.id)"
-                    text
-                    color="grey"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </template>
-                <span class="red--text">Delete</span>
-              </v-tooltip>
+              <v-btn @click="deleteMember(member.id)" text color="grey">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-pagination color="red accent-1" v-model="page" :length="6"></v-pagination>
+        <v-pagination color="koroleva" v-model="page" :length="allMembers.meta.last_page"></v-pagination>
       </v-row>
     </v-container>
   </div>
@@ -75,20 +73,7 @@ export default {
     page: 1,
   }),
   methods: {
-    ...mapActions(["fetchMembers", "updateMember", "deleteMember"]),
-    onDblClick(member) {
-      const updMember = {
-        id: member.id,
-        first_name: member.first_name,
-        last_name: member.last_name,
-        phone: member.phone,
-        record: "Foka",
-        birth_date: member.birth_date,
-        group_id: member.group_id,
-      };
-
-      this.updateMember(updMember);
-    },
+    ...mapActions(["fetchMembers", "deleteMember"]),
   },
   computed: mapGetters(["allMembers"]),
   created() {

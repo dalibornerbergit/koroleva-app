@@ -2,12 +2,12 @@
 <template>
   <nav>
     <!-- Snackbar -->
-    <v-snackbar v-model="snackbar" timeout="4000" top color="success">
+    <!-- <v-snackbar v-model="snackbar" timeout="4000" top color="success">
       Added new member
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
       </template>
-    </v-snackbar>
+    </v-snackbar>-->
 
     <!-- Nav -->
     <v-app-bar app flat>
@@ -37,7 +37,7 @@
         </v-menu>
       </div>
 
-      <span class="grey--text d-none d-sm-flex koroleva py-1 px-2 rounded">{{user.email}}</span>
+      <span class="white--text d-none d-sm-flex koroleva py-1 px-2 rounded">{{user.email}}</span>
 
       <!-- Logout -->
       <div>
@@ -62,7 +62,15 @@
         </v-col>
       </v-row>
       <v-row class="my-5" justify="center">
-        <AddMember @projectAdded="snackbar = true" />
+        <div class="ma-1">
+          <AddTraining @projectAdded="snackbar = true" />
+        </div>
+        <div class="ma-1">
+          <AddMember @projectAdded="snackbar = true" />
+        </div>
+        <div class="ma-1">
+          <AddGroup @projectAdded="snackbar = true" />
+        </div>
       </v-row>
 
       <!-- List of actions -->
@@ -83,10 +91,14 @@
 <script>
 import { mapGetters } from "vuex";
 import AddMember from "./AddMember";
+import AddGroup from "./AddGroup";
+import AddTraining from "./AddTraining";
 
 export default {
   components: {
     AddMember,
+    AddGroup,
+    AddTraining
   },
   data: () => ({
     drawer: false,
