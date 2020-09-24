@@ -8,7 +8,11 @@
 
     <v-container v-if="allTrainings.data" class="my-5">
       <v-row justify="center">
-        <v-pagination color="koroleva" v-model="page" :length="allTrainings.meta.last_page"></v-pagination>
+        <v-pagination
+          color="koroleva"
+          v-model="page"
+          :length="allTrainings.meta.last_page"
+        ></v-pagination>
       </v-row>
       <v-row>
         <v-col
@@ -28,15 +32,15 @@
             <v-card-text class="text-left">
               <div class="grey--text">
                 Date:
-                <b>{{training.date}}</b>
+                <b>{{ training.date }}</b>
               </div>
               <div class="grey--text">
                 Info:
-                <b>{{training.record}}</b>
+                <b>{{ training.record }}</b>
               </div>
               <div class="grey--text">
                 Group:
-                <b>{{training.group_id}}</b>
+                <b>{{ training.group.name }}</b>
               </div>
               <div class="grey--text">
                 Members:
@@ -54,7 +58,11 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-pagination color="koroleva" v-model="page" :length="allTrainings.meta.last_page"></v-pagination>
+        <v-pagination
+          color="koroleva"
+          v-model="page"
+          :length="allTrainings.meta.last_page"
+        ></v-pagination>
       </v-row>
     </v-container>
   </div>
@@ -74,7 +82,9 @@ export default {
   methods: {
     ...mapActions(["fetchTrainings", "deleteTraining"]),
   },
-  computed: mapGetters(["allTrainings"]),
+  computed: {
+    ...mapGetters(["allTrainings"]),
+  },
   created() {
     this.fetchTrainings(this.page);
   },

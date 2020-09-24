@@ -41,7 +41,7 @@
               </div>
               <div class="grey--text">
                 Group:
-                <b>{{member.group_id}}</b>
+                <b>{{member.group.name}}</b>
               </div>
             </v-card-text>
             <v-card-actions>

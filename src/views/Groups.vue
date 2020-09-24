@@ -8,7 +8,14 @@
 
     <v-container v-if="allGroups.data" class="my-5">
       <v-row>
-        <v-col cols="12" sm="6" md="4" lg="3" v-for="group in allGroups.data" :key="group.id">
+        <v-col
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+          v-for="group in allGroups.data"
+          :key="group.id"
+        >
           <v-card flat class="text-center ma-3">
             <div>
               <v-avatar color="koroleva" class="mt-4" size="50">
@@ -18,15 +25,25 @@
             <v-card-text class="text-left">
               <div class="grey--text">
                 Name:
-                <b>{{group.name}}</b>
+                <b>{{ group.name }}</b>
               </div>
               <div class="grey--text">
-                Last Name:
-                <b>{{group.record}}</b>
+                Info:
+                <b>{{ group.record }}</b>
               </div>
-              <div class="grey--text">
+              <v-row class="pa-3" justify="center">
+                <v-btn @click="showMembers = !showMembers" small text
+                  ><span v-if="!showMembers">show more</span
+                  ><span v-else>show less</span></v-btn
+                >
+              </v-row>
+              <div v-if="showMembers" class="grey--text">
                 Members:
-                <b>Članovi</b>
+                <ol class="grey--text">
+                  <li v-for="member in group.members" :key="member.id">
+                    <b>{{ member.first_name }}</b>
+                  </li>
+                </ol>
               </div>
             </v-card-text>
             <v-card-actions>
@@ -51,7 +68,9 @@ export default {
   components: {
     AddGroup,
   },
-  data: () => ({}),
+  data: () => ({
+    showMembers: false,
+  }),
   methods: {
     ...mapActions(["fetchGroups", "deleteGroup"]),
   },

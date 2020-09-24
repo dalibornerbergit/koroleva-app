@@ -70,7 +70,9 @@
             label="Group"
             prepend-icon="mdi-account-group-outline"
             v-model="member.group_id"
-            :items="groups"
+            :items="allGroups.data"
+            item-text="name"
+            item-value="id"
           ></v-select>
 
           <v-card-actions class="px-0">
@@ -101,8 +103,8 @@
 </template>
 
 <script>
-import moment from "moment";
-import { mapActions } from "vuex";
+// import moment from "moment";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   props: {
@@ -120,22 +122,24 @@ export default {
     menu2: false,
     loading: false,
     dialog: false,
-    groups: [1, 2, 3, 4, 5, 6],
     valid: false,
     inputRules: [(v) => !!v || "Required"],
   }),
+  // computed: {
+  //   formatedDate() {
+  //     return this.member.date
+  //       ? moment(String(this.date)).format("DD.MM.YYYY")
+  //       : "";
+  //   },
+  // },
   computed: {
-    formatedDate() {
-      return this.member.date
-        ? moment(String(this.date)).format("DD.MM.YYYY")
-        : "";
-    },
+    ...mapGetters(["allGroups"]),
   },
   created() {
     if (this.memberProp) this.member = this.memberProp;
   },
   methods: {
-    ...mapActions(["addMember", "updateMember"]),
+    ...mapActions(["addMember", "fetchGroups", "updateMember"]),
     submit() {
       this.addMember(this.member);
       this.dialog = false;

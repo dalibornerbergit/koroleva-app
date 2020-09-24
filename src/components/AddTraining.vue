@@ -19,12 +19,17 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-      >Add new training</v-btn>
+        >Add new training</v-btn
+      >
     </template>
 
     <v-card>
-      <v-card-title v-if="trainingProp" class="title grey--text">Edit training</v-card-title>
-      <v-card-title v-else class="title grey--text">Add new training</v-card-title>
+      <v-card-title v-if="trainingProp" class="title grey--text"
+        >Edit training</v-card-title
+      >
+      <v-card-title v-else class="title grey--text"
+        >Add new training</v-card-title
+      >
       <v-card-text>
         <v-form class="px-3" v-model="valid">
           <v-menu
@@ -39,14 +44,17 @@
               <v-text-field
                 v-model="training.date"
                 :rules="inputRules"
-                label="Birth date"
+                label="Date"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="training.date" @input="menu2 = false"></v-date-picker>
+            <v-date-picker
+              v-model="training.date"
+              @input="menu2 = false"
+            ></v-date-picker>
           </v-menu>
           <v-textarea
             label="Info"
@@ -58,7 +66,9 @@
             label="Group"
             prepend-icon="mdi-account-group-outline"
             v-model="training.group_id"
-            :items="groups"
+            :items="allGroups.data"
+            item-text="name"
+            item-value="id"
           ></v-select>
           <v-card-actions class="px-0">
             <v-spacer></v-spacer>
@@ -70,7 +80,8 @@
               color="info"
               class="mx-0 mt-3"
               @click="submitEdit(training.id)"
-            >Edit training</v-btn>
+              >Edit training</v-btn
+            >
             <v-btn
               v-else
               :disabled="!valid"
@@ -79,7 +90,8 @@
               color="info"
               class="mx-0 mt-3"
               @click="submit"
-            >Add training</v-btn>
+              >Add training</v-btn
+            >
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -88,7 +100,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   props: {
@@ -103,15 +115,18 @@ export default {
     menu2: false,
     loading: false,
     dialog: false,
-    groups: [1, 2, 3, 4, 5, 6],
     valid: false,
     inputRules: [(v) => !!v || "Required"],
   }),
+  computed: {
+    ...mapGetters(["allGroups"]),
+  },
   created() {
     if (this.trainingProp) this.training = this.trainingProp;
+    this.fetchGroups();
   },
   methods: {
-    ...mapActions(["addTraining", "updateTraining"]),
+    ...mapActions(["addTraining", "fetchGroups", "updateTraining"]),
     submit() {
       this.addTraining(this.training);
       this.dialog = false;
