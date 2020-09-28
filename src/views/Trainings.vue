@@ -70,7 +70,7 @@
 
 <script>
 import AddTraining from "../components/AddTraining";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -80,13 +80,14 @@ export default {
     page: 1,
   }),
   methods: {
-    ...mapActions(["fetchTrainings", "deleteTraining"]),
+    ...mapActions(["fetchTrainings", "fetchGroups", "deleteTraining"]),
   },
   computed: {
-    ...mapGetters(["allTrainings"]),
+    ...mapGetters(["allTrainings", "allGroups"]),
   },
   created() {
     this.fetchTrainings(this.page);
+    this.fetchGroups();
   },
   watch: {
     page: function () {

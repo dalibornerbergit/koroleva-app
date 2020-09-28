@@ -12,7 +12,7 @@ const getters = {
 
 const actions = {
     async fetchMembers({ commit }, page) {
-        const response = await axios.get(`${url}/?page=${page}`)
+        const response = await axios.get(`${url}?page=${page}`)
 
         commit('setMembers', response.data)
     },

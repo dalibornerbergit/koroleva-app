@@ -33,8 +33,8 @@
               </div>
               <v-row class="pa-3" justify="center">
                 <v-btn @click="showMembers = !showMembers" small text
-                  ><span v-if="!showMembers">show more</span
-                  ><span v-else>show less</span></v-btn
+                  ><span class="grey--text" v-if="!showMembers">show more</span
+                  ><span class="grey--text" v-else>show less</span></v-btn
                 >
               </v-row>
               <div v-if="showMembers" class="grey--text">

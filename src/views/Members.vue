@@ -73,11 +73,12 @@ export default {
     page: 1,
   }),
   methods: {
-    ...mapActions(["fetchMembers", "deleteMember"]),
+    ...mapActions(["fetchMembers", "fetchGroups", "deleteMember"]),
   },
   computed: mapGetters(["allMembers"]),
   created() {
     this.fetchMembers(this.page);
+    this.fetchGroups();
   },
   watch: {
     page: function () {

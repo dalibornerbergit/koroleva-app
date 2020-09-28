@@ -19,7 +19,7 @@
       <v-spacer></v-spacer>
 
       <!-- Dropdown menu -->
-      <div class="d-none d-sm-flex">
+      <div class="d-none d-md-flex mx-2">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="grey" text v-bind="attrs" v-on="on">

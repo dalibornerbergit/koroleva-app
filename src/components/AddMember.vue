@@ -125,13 +125,6 @@ export default {
     valid: false,
     inputRules: [(v) => !!v || "Required"],
   }),
-  // computed: {
-  //   formatedDate() {
-  //     return this.member.date
-  //       ? moment(String(this.date)).format("DD.MM.YYYY")
-  //       : "";
-  //   },
-  // },
   computed: {
     ...mapGetters(["allGroups"]),
   },

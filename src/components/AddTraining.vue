@@ -123,7 +123,6 @@ export default {
   },
   created() {
     if (this.trainingProp) this.training = this.trainingProp;
-    this.fetchGroups();
   },
   methods: {
     ...mapActions(["addTraining", "fetchGroups", "updateTraining"]),
