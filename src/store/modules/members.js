@@ -11,9 +11,9 @@ const getters = {
 }
 
 const actions = {
-    async fetchMembers({ commit }, [page, search]) {
+    async fetchMembers({ commit }, [page, search, group_id]) {
 
-        const response = await axios.get(`${url}?page=${page}&first_name=${search}`)
+        const response = await axios.get(`${url}?page=${page}&first_name=${search}&group_id=${group_id}`)
 
         commit('setMembers', response.data)
     },

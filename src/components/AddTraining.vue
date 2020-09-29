@@ -70,6 +70,7 @@
             item-text="name"
             item-value="id"
           ></v-select>
+
           <v-card-actions class="px-0">
             <v-spacer></v-spacer>
             <v-btn

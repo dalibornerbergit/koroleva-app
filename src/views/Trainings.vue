@@ -42,13 +42,28 @@
                 Group:
                 <b>{{ training.group.name }}</b>
               </div>
-              <div class="grey--text">
-                Members:
-                <b>Članovi</b>
+              <v-row class="pa-3" justify="center">
+                <v-btn @click="showMembers = !showMembers" small text
+                  ><span class="grey--text" v-if="!showMembers">show more</span
+                  ><span class="grey--text" v-else>show less</span></v-btn
+                >
+              </v-row>
+              <div v-if="showMembers" class="grey--text">
+                Members: <b>{{ training.members.length }}</b>
+                <ol class="grey--text">
+                  <li v-for="member in training.members" :key="member.id">
+                    <b>{{ member.first_name }}</b>
+                  </li>
+                </ol>
               </div>
             </v-card-text>
             <v-card-actions>
               <AddTraining :trainingProp="training" />
+              <v-spacer></v-spacer>
+              <AddPresentMembers
+                :training_id="training.id"
+                :presentMembers="training.members"
+              />
               <v-spacer></v-spacer>
               <v-btn @click="deleteTraining(training.id)" text color="grey">
                 <v-icon>mdi-delete</v-icon>
@@ -70,24 +85,33 @@
 
 <script>
 import AddTraining from "../components/AddTraining";
+import AddPresentMembers from "../components/AddPresentMembers";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     AddTraining,
+    AddPresentMembers,
   },
   data: () => ({
     page: 1,
+    showMembers: false,
   }),
   methods: {
-    ...mapActions(["fetchTrainings", "fetchGroups", "deleteTraining"]),
+    ...mapActions([
+      "fetchTrainings",
+      "fetchGroups",
+      "fetchMembers",
+      "deleteTraining",
+    ]),
   },
   computed: {
-    ...mapGetters(["allTrainings", "allGroups"]),
+    ...mapGetters(["allTrainings", "allGroups", "allMembers"]),
   },
   created() {
     this.fetchTrainings(this.page);
     this.fetchGroups();
+    this.fetchMembers([1, "", 1]);
   },
   watch: {
     page: function () {
