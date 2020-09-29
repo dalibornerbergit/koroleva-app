@@ -40,10 +40,10 @@
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  props: { training_id: Number, presentMembers: Array },
+  props: { training_id: Number, trainingGroup: Number, presentMembers: Array },
   data() {
     return {
       dialog: false,
@@ -57,6 +57,7 @@ export default {
     this.members = this.presentMembers;
   },
   methods: {
+    ...mapActions(["fetchMembers"]),
     async submit() {
       await axios
         .post(
@@ -66,6 +67,11 @@ export default {
           console.log(response);
           this.dialog = false;
         });
+    },
+  },
+  watch: {
+    dialog: function () {
+      if (this.dialog) this.fetchMembers([1, "", this.trainingGroup]);
     },
   },
 };

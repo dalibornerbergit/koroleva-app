@@ -99,15 +99,15 @@ export default {
   },
   computed: mapGetters(["allMembers"]),
   created() {
-    this.fetchMembers([this.page, this.search]);
+    this.fetchMembers([this.page, this.search, null]);
     this.fetchGroups();
   },
   watch: {
     page: function () {
-      this.fetchMembers([this.page, this.search]);
+      this.fetchMembers([this.page, this.search, null]);
     },
     search: function () {
-      this.fetchMembers([this.page, this.search]);
+      this.fetchMembers([this.page, this.search, null]);
     },
   },
 };

@@ -14,8 +14,6 @@ const actions = {
     async fetchTrainings({ commit }, page) {
         const response = await axios.get(`${url}?page=${page}`)
 
-        console.log(response)
-
         commit('setTrainings', response.data)
     },
     async addTraining({ commit }, training) {
