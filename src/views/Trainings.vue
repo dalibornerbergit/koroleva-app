@@ -61,6 +61,7 @@
               <AddTraining :trainingProp="training" />
               <v-spacer></v-spacer>
               <AddPresentMembers
+                :page="page"
                 :training_id="training.id"
                 :trainingGroup="training.group.id"
                 :presentMembers="training.members"
@@ -99,11 +100,7 @@ export default {
     showMembers: false,
   }),
   methods: {
-    ...mapActions([
-      "fetchTrainings",
-      "fetchGroups",
-      "deleteTraining",
-    ]),
+    ...mapActions(["fetchTrainings", "fetchGroups", "deleteTraining"]),
   },
   computed: {
     ...mapGetters(["allTrainings", "allGroups"]),

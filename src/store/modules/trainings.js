@@ -19,6 +19,8 @@ const actions = {
     async addTraining({ commit }, training) {
         const response = await axios.post(url, training)
 
+        console.log(response)
+
         commit('newTraining', response.data.data)
     },
     async updateTraining({ commit }, training) {

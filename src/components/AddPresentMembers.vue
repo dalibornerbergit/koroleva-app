@@ -43,7 +43,7 @@ import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  props: { training_id: Number, trainingGroup: Number, presentMembers: Array },
+  props: { page: Number, training_id: Number, trainingGroup: Number, presentMembers: Array },
   data() {
     return {
       dialog: false,
@@ -57,15 +57,19 @@ export default {
     this.members = this.presentMembers;
   },
   methods: {
-    ...mapActions(["fetchMembers"]),
+    ...mapActions(["fetchMembers", "fetchTrainings"]),
     async submit() {
       await axios
         .post(
-          `http://127.0.0.1:8000/api/v1/presence?training_id=${this.training_id}&members=[${this.members}]`
-        )
+          `http://127.0.0.1:8000/api/v1/presence`
+        ,{
+          training_id: this.training_id,
+          members: this.members
+        })
         .then((response) => {
           console.log(response);
           this.dialog = false;
+          this.fetchTrainings(this.page);
         });
     },
   },

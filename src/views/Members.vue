@@ -27,7 +27,7 @@
           md="4"
           lg="3"
           v-for="member in allMembers.data"
-          :key="member.id"
+          :key="member.id + 'fswfs'"
         >
           <v-card flat class="text-center ma-3">
             <div>
