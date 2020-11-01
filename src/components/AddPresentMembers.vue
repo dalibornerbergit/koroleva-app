@@ -63,8 +63,8 @@ export default {
   },
   methods: {
     ...mapActions(["fetchMembers", "fetchTrainings"]),
-    async submit() {
-      await Api.post(`presence`, {
+    submit() {
+      Api.post(`presence`, {
         training_id: this.training_id,
         members: this.members,
       }).then((response) => {

@@ -79,7 +79,7 @@ export default {
           this.error = false;
           localStorage.setItem("accessToken", response.data.accessToken);
           this.$store.dispatch("user", response.data.user);
-          this.$router.push({ name: "trainings" });
+          window.location.href = "/";
         })
         .catch((error) => {
           console.log(error);

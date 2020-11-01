@@ -6,7 +6,8 @@ const instance = axios.create({
     baseURL: baseUrl,
     withCredentials: true, // Check cross-site Access-Control
     headers: {
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization: "Bearer " + localStorage.getItem("accessToken")
     },
 });
 

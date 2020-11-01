@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+// This is not being used!
+
 const url = 'http://127.0.0.1:8000/api/v1/user/'
 
 class AuthServices {
