@@ -8,17 +8,37 @@
 
     <v-container v-if="allMembers.data" class="my-5">
       <v-row class="mx-2">
-        <v-spacer></v-spacer>
-        <v-col cols="12" lg="3">
-          <v-text-field v-model="search" label="Search"></v-text-field>
+        <v-col class="py-0" cols="12" sm="6" lg="3">
+          <v-select
+            prepend-icon="mdi-account-group-outline"
+            :items="allGroups.data"
+            v-model="group_id"
+            label="Group"
+            item-text="name"
+            item-value="id"
+          ></v-select>
+        </v-col>
+        <v-col class="py-0" cols="12" sm="6" lg="3">
+          <v-text-field
+            v-model="search"
+            prepend-icon="mdi-account-search-outline"
+            label="Search"
+          ></v-text-field>
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-pagination
-          color="koroleva"
-          v-model="page"
-          :length="allMembers.meta.last_page"
-        ></v-pagination>
+        <v-btn color="koroleva white--text" depressed @click="freshMembers"
+          >Remove filters</v-btn
+        >
+      </v-row>
+      <v-row justify="center">
+        <v-col>
+          <v-pagination
+            color="koroleva"
+            v-model="page"
+            :length="allMembers.meta.last_page"
+          ></v-pagination>
+        </v-col>
       </v-row>
       <v-row>
         <v-col
@@ -64,19 +84,22 @@
             <v-card-actions>
               <AddMember :memberProp="member" />
               <v-spacer></v-spacer>
-              <v-btn @click="deleteMember(member.id)" text color="grey">
+              <DeleteDialog :memberId="member.id" type="member" />
+              <!-- <v-btn @click="deleteMember(member.id)" text color="grey">
                 <v-icon>mdi-delete</v-icon>
-              </v-btn>
+              </v-btn> -->
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-pagination
-          color="koroleva"
-          v-model="page"
-          :length="allMembers.meta.last_page"
-        ></v-pagination>
+        <v-col>
+          <v-pagination
+            color="koroleva"
+            v-model="page"
+            :length="allMembers.meta.last_page"
+          ></v-pagination>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -84,30 +107,41 @@
 
 <script>
 import AddMember from "../components/AddMember";
+import DeleteDialog from "../components/DeleteDialog";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     AddMember,
+    DeleteDialog,
   },
   data: () => ({
     page: 1,
     search: "",
+    group_id: null,
   }),
   methods: {
-    ...mapActions(["fetchMembers", "fetchGroups", "deleteMember"]),
+    ...mapActions(["fetchMembers", "fetchGroups"]),
+    freshMembers() {
+      this.fetchMembers([this.page, "", null]);
+      this.search = "";
+      this.group_id = null;
+    },
   },
-  computed: mapGetters(["allMembers"]),
+  computed: mapGetters(["allMembers", "allGroups"]),
   created() {
-    this.fetchMembers([this.page, this.search, null]);
+    this.fetchMembers([this.page, this.search, this.group_id]);
     this.fetchGroups();
   },
   watch: {
     page: function () {
-      this.fetchMembers([this.page, this.search, null]);
+      this.fetchMembers([this.page, this.search, this.group_id]);
     },
     search: function () {
-      this.fetchMembers([this.page, this.search, null]);
+      this.fetchMembers([this.page, this.search, this.group_id]);
+    },
+    group_id: function () {
+      this.fetchMembers([this.page, this.search, this.group_id]);
     },
   },
 };

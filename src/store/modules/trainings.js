@@ -1,6 +1,4 @@
-import axios from 'axios'
-
-const url = 'http://127.0.0.1:8000/api/v1/training'
+import Api from '@/plugins/Api'
 
 const state = {
     trainings: []
@@ -11,25 +9,25 @@ const getters = {
 }
 
 const actions = {
-    async fetchTrainings({ commit }, page) {
-        const response = await axios.get(`${url}?page=${page}`)
+    async fetchTrainings({ commit }, [page, group_id]) {
+        const response = await Api.get(`trainings?page=${page}&group_id=${group_id}`)
 
         commit('setTrainings', response.data)
     },
     async addTraining({ commit }, training) {
-        const response = await axios.post(url, training)
+        const response = await Api.post('trainings', training)
 
         console.log(response)
 
         commit('newTraining', response.data.data)
     },
     async updateTraining({ commit }, training) {
-        const response = await axios.put(`${url}/${training.id}`, training)
+        const response = await Api.put(`trainings/${training.id}`, training)
 
         commit('updatedTraining', response.data.data)
     },
     async deleteTraining({ commit }, id) {
-        await axios.delete(`${url}/${id}`)
+        await Api.delete(`trainings/${id}`)
 
         commit('removeTraining', id)
     },

@@ -41,7 +41,7 @@
                 Members:
                 <ol class="grey--text">
                   <li v-for="member in group.members" :key="member.id">
-                    <b>{{ member.first_name }}</b>
+                    <b>{{ member.first_name }} {{member.last_name}}</b>
                   </li>
                 </ol>
               </div>
@@ -49,9 +49,10 @@
             <v-card-actions>
               <AddGroup :groupProp="group" />
               <v-spacer></v-spacer>
-              <v-btn @click="deleteGroup(group.id)" text color="grey">
+              <DeleteDialog :groupId="group.id" type="group" />
+              <!-- <v-btn @click="deleteGroup(group.id)" text color="grey">
                 <v-icon>mdi-delete</v-icon>
-              </v-btn>
+              </v-btn> -->
             </v-card-actions>
           </v-card>
         </v-col>
@@ -62,17 +63,19 @@
 
 <script>
 import AddGroup from "../components/AddGroup";
+import DeleteDialog from "../components/DeleteDialog";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     AddGroup,
+    DeleteDialog
   },
   data: () => ({
     showMembers: false,
   }),
   methods: {
-    ...mapActions(["fetchGroups", "deleteGroup"]),
+    ...mapActions(["fetchGroups"]),
   },
   computed: mapGetters(["allGroups"]),
   created() {

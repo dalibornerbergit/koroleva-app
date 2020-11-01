@@ -1,6 +1,4 @@
-import axios from 'axios'
-
-const url = 'http://127.0.0.1:8000/api/v1/group'
+import Api from '@/plugins/Api'
 
 const state = {
     groups: []
@@ -12,22 +10,22 @@ const getters = {
 
 const actions = {
     async fetchGroups({ commit }) {
-        const response = await axios.get(url)
+        const response = await Api.get('groups')
 
         commit('setGroups', response.data)
     },
     async addGroup({ commit }, group) {
-        const response = await axios.post(url, group)
+        const response = await Api.post('groups', group)
 
         commit('newGroup', response.data.data)
     },
     async updateGroup({ commit }, group) {
-        const response = await axios.put(`${url}/${group.id}`, group)
+        const response = await Api.put(`groups/${group.id}`, group)
 
         commit('updatedGroup', response.data.data)
     },
     async deleteGroup({ commit }, id) {
-        await axios.delete(`${url}/${id}`)
+        await Api.delete(`groups/${id}`)
 
         commit('removeGroup', id)
     }

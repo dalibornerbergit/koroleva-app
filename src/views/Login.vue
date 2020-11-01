@@ -3,16 +3,32 @@
     <v-row justify="center">
       <v-col cols="10" md="6">
         <v-card outlined class="middle">
+          <v-alert v-if="error" class="pa-2 ma-2" type="error">
+            Wrong email or password
+          </v-alert>
           <v-card-title class="title grey--text">Login</v-card-title>
           <v-row justify="center">
             <v-avatar size="100">
-              <img src="/koroleva-circle-rmbg.png" alt="Image not found" />
+              <img
+                :src="require('@/assets/koroleva-circle-rmbg.png')"
+                alt="Image not found"
+              />
             </v-avatar>
           </v-row>
           <v-card-text>
             <v-form v-model="valid">
-              <v-text-field type="email" label="Email" v-model="email" :rules="inputRules"></v-text-field>
-              <v-text-field type="password" label="Password" v-model="password" :rules="inputRules"></v-text-field>
+              <v-text-field
+                type="email"
+                label="Email"
+                v-model="email"
+                :rules="inputRules"
+              ></v-text-field>
+              <v-text-field
+                type="password"
+                label="Password"
+                v-model="password"
+                :rules="inputRules"
+              ></v-text-field>
               <v-card-actions class="px-0">
                 <v-spacer></v-spacer>
                 <v-btn
@@ -21,7 +37,8 @@
                   text
                   color="koroleva"
                   @click="login"
-                >Login</v-btn>
+                  >Login</v-btn
+                >
               </v-card-actions>
             </v-form>
           </v-card-text>
@@ -32,7 +49,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/plugins/Api";
 // import AuthServices from "../services/authServices";
 
 export default {
@@ -42,6 +59,7 @@ export default {
       password: "",
       loading: false,
       valid: false,
+      error: false,
       inputRules: [(v) => !!v || "Required"],
     };
   },
@@ -51,17 +69,22 @@ export default {
 
       this.loading = true;
 
-      axios
-        .post("http://127.0.0.1:8000/api/v1/user/login", {
-          email: this.email,
-          password: this.password,
-        })
+      Api.post("user/login", {
+        email: this.email,
+        password: this.password,
+      })
         .then((response) => {
           console.log("Login", response);
           this.loading = false;
+          this.error = false;
           localStorage.setItem("accessToken", response.data.accessToken);
           this.$store.dispatch("user", response.data.user);
           this.$router.push({ name: "trainings" });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.error = true;
+          this.loading = false;
         });
     },
   },

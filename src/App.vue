@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/plugins/Api";
 import { mapGetters } from "vuex";
 import Navbar from "./components/Navbar.vue";
 
@@ -23,12 +23,11 @@ export default {
     ...mapGetters(["user"]),
   },
   created() {
-    axios
-      .get("http://127.0.0.1:8000/api/v1/user", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-      })
+    Api.get("user", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+    })
       .then((response) => {
         console.log("User: ", response);
         this.$store.dispatch("user", response.data);

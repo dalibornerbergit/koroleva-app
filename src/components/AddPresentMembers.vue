@@ -39,11 +39,16 @@
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/plugins/Api";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  props: { page: Number, training_id: Number, trainingGroup: Number, presentMembers: Array },
+  props: {
+    page: Number,
+    training_id: Number,
+    trainingGroup: Number,
+    presentMembers: Array,
+  },
   data() {
     return {
       dialog: false,
@@ -59,18 +64,14 @@ export default {
   methods: {
     ...mapActions(["fetchMembers", "fetchTrainings"]),
     async submit() {
-      await axios
-        .post(
-          `http://127.0.0.1:8000/api/v1/presence`
-        ,{
-          training_id: this.training_id,
-          members: this.members
-        })
-        .then((response) => {
-          console.log(response);
-          this.dialog = false;
-          this.fetchTrainings(this.page);
-        });
+      await Api.post(`presence`, {
+        training_id: this.training_id,
+        members: this.members,
+      }).then((response) => {
+        console.log(response);
+        this.dialog = false;
+        this.fetchTrainings([this.page, null]);
+      });
     },
   },
   watch: {
@@ -80,6 +81,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

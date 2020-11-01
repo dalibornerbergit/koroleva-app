@@ -7,12 +7,38 @@
     </v-row>
 
     <v-container v-if="allTrainings.data" class="my-5">
+      <v-row class="mx-2">
+        <v-col class="py-0" cols="12" sm="6" lg="3">
+          <v-select
+            prepend-icon="mdi-account-group-outline"
+            :items="allGroups.data"
+            v-model="group_id"
+            label="Group"
+            item-text="name"
+            item-value="id"
+          ></v-select>
+        </v-col>
+        <!-- <v-col cols="12" sm="6" lg="3">
+          <v-text-field
+            v-model="search"
+            prepend-icon="mdi-account-search-outline"
+            label="Search"
+          ></v-text-field>
+        </v-col> -->
+      </v-row>
       <v-row justify="center">
-        <v-pagination
-          color="koroleva"
-          v-model="page"
-          :length="allTrainings.meta.last_page"
-        ></v-pagination>
+        <v-btn color="koroleva white--text" depressed @click="freshTrainings"
+          >Remove filters</v-btn
+        >
+      </v-row>
+      <v-row justify="center">
+        <v-col>
+          <v-pagination
+            color="koroleva"
+            v-model="page"
+            :length="allTrainings.meta.last_page"
+          ></v-pagination>
+        </v-col>
       </v-row>
       <v-row>
         <v-col
@@ -52,7 +78,7 @@
                 Members: <b>{{ training.members.length }}</b>
                 <ol class="grey--text">
                   <li v-for="member in training.members" :key="member.id">
-                    <b>{{ member.first_name }}</b>
+                    <b>{{ member.first_name }} {{ member.last_name }}</b>
                   </li>
                 </ol>
               </div>
@@ -67,19 +93,22 @@
                 :presentMembers="training.members"
               />
               <v-spacer></v-spacer>
-              <v-btn @click="deleteTraining(training.id)" text color="grey">
+              <DeleteDialog :trainingId="training.id" type="training" />
+              <!-- <v-btn @click="deleteTraining(training.id)" text color="grey">
                 <v-icon>mdi-delete</v-icon>
-              </v-btn>
+              </v-btn> -->
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-pagination
-          color="koroleva"
-          v-model="page"
-          :length="allTrainings.meta.last_page"
-        ></v-pagination>
+        <v-col>
+          <v-pagination
+            color="koroleva"
+            v-model="page"
+            :length="allTrainings.meta.last_page"
+          ></v-pagination>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -88,30 +117,40 @@
 <script>
 import AddTraining from "../components/AddTraining";
 import AddPresentMembers from "../components/AddPresentMembers";
+import DeleteDialog from "../components/DeleteDialog";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     AddTraining,
     AddPresentMembers,
+    DeleteDialog,
   },
   data: () => ({
     page: 1,
+    group_id: null,
     showMembers: false,
   }),
   methods: {
     ...mapActions(["fetchTrainings", "fetchGroups", "deleteTraining"]),
+    freshTrainings() {
+      this.fetchTrainings([this.page, null]);
+      this.group_id = null;
+    },
   },
   computed: {
     ...mapGetters(["allTrainings", "allGroups"]),
   },
   created() {
-    this.fetchTrainings(this.page);
+    this.fetchTrainings([this.page, this.group_id]);
     this.fetchGroups();
   },
   watch: {
     page: function () {
-      this.fetchTrainings(this.page);
+      this.fetchTrainings([this.page, this.group_id]);
+    },
+    group_id: function () {
+      this.fetchTrainings([this.page, this.group_id]);
     },
   },
 };
