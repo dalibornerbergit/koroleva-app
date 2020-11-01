@@ -15,9 +15,11 @@ const actions = {
         commit('setTrainings', response.data)
     },
     async addTraining({ commit }, training) {
-        const response = await Api.post('trainings', training)
+        await Api.post('trainings', training)
 
-        commit('newTraining', response.data.data)
+        const newData = await Api.get(`trainings?page=1&group_id=null`)
+
+        commit('newTraining', newData.data)
     },
     async updateTraining({ commit }, training) {
         const response = await Api.put(`trainings/${training.id}`, training)
@@ -33,7 +35,7 @@ const actions = {
 
 const mutations = {
     setTrainings: (state, trainings) => state.trainings = trainings,
-    newTraining: (state, training) => state.trainings.data.unshift(training),
+    newTraining: (state, trainings) => state.trainings = trainings,
     updatedTraining: (state, updTraining) => {
         const index = state.trainings.data.findIndex(training => training.id === updTraining.id)
 

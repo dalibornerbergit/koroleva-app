@@ -11,7 +11,7 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-      >Add new group</v-btn>
+      ><v-icon left>mdi-plus</v-icon>Add new group</v-btn>
     </template>
 
     <v-card>

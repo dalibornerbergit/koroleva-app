@@ -19,7 +19,7 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-        >Add new training</v-btn
+        ><v-icon left>mdi-plus</v-icon>Add new training</v-btn
       >
     </template>
 

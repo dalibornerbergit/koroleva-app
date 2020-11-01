@@ -27,8 +27,8 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-btn color="koroleva white--text" depressed @click="freshMembers"
-          >Remove filters</v-btn
+        <v-btn color="koroleva white--text" depressed @click="freshMembers">
+          <v-icon left>mdi-broom</v-icon>Remove filters</v-btn
         >
       </v-row>
       <v-row justify="center">

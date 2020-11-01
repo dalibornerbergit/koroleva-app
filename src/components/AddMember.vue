@@ -11,7 +11,7 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-      >Add new member</v-btn>
+      ><v-icon left>mdi-plus</v-icon>Add new member</v-btn>
     </template>
 
     <v-card>
