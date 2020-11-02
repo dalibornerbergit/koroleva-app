@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Trainings from '../views/Trainings.vue'
 import Members from '../views/Members.vue'
 import Groups from '../views/Groups.vue'
+import MemberTrainings from '../views/MemberTrainings'
 import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
@@ -26,6 +27,11 @@ const routes = [
     path: '/groups',
     name: 'groups',
     component: Groups
+  },
+  {
+    path: '/members/:id',
+    name: 'memberTrainings',
+    component: MemberTrainings
   },
   {
     path: '/login',

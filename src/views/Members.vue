@@ -84,6 +84,10 @@
             <v-card-actions>
               <AddMember :memberProp="member" />
               <v-spacer></v-spacer>
+              <v-btn text color="grey" @click="showTrainings(member.id)"
+                ><v-icon>mdi-human-female-dance</v-icon></v-btn
+              >
+              <v-spacer></v-spacer>
               <DeleteDialog :memberId="member.id" type="member" />
               <!-- <v-btn @click="deleteMember(member.id)" text color="grey">
                 <v-icon>mdi-delete</v-icon>
@@ -126,6 +130,9 @@ export default {
       this.fetchMembers([this.page, "", null]);
       this.search = "";
       this.group_id = null;
+    },
+    showTrainings(id) {
+      this.$router.push("/members/" + id);
     },
   },
   computed: mapGetters(["allMembers", "allGroups"]),
