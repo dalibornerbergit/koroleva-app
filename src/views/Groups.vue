@@ -1,7 +1,7 @@
 <template>
-  <div class="groups">
+  <div class="groups" v-if="allGroups.data">
     <v-row class="px-2">
-      <h1 class="title grey--text">Groups</h1>
+      <h1 class="title grey--text">Groups ({{ allGroups.data.length }})</h1>
       <v-spacer></v-spacer>
       <AddGroup />
     </v-row>
@@ -41,7 +41,7 @@
                 Members:
                 <ol class="grey--text">
                   <li v-for="member in group.members" :key="member.id">
-                    <b>{{ member.first_name }} {{member.last_name}}</b>
+                    <b>{{ member.first_name }} {{ member.last_name }}</b>
                   </li>
                 </ol>
               </div>
@@ -69,7 +69,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     AddGroup,
-    DeleteDialog
+    DeleteDialog,
   },
   data: () => ({
     showMembers: false,

@@ -9,39 +9,6 @@
     </v-row>
 
     <v-container v-if="trainings" class="my-5">
-      <!-- <v-row class="mx-2">
-        <v-col class="py-0" cols="12" sm="6" lg="3">
-          <v-select
-            prepend-icon="mdi-account-group-outline"
-            :items="allGroups.data"
-            v-model="group_id"
-            label="Group"
-            item-text="name"
-            item-value="id"
-          ></v-select>
-        </v-col>
-        <v-col class="py-0" cols="12" sm="6" lg="3">
-          <v-text-field
-            v-model="search"
-            prepend-icon="mdi-account-search-outline"
-            label="Search"
-          ></v-text-field>
-        </v-col>
-      </v-row> -->
-      <!-- <v-row justify="center">
-        <v-btn color="koroleva white--text" depressed @click="freshMembers">
-          <v-icon left>mdi-broom</v-icon>Remove filters</v-btn
-        >
-      </v-row> -->
-      <!-- <v-row justify="center">
-        <v-col>
-          <v-pagination
-            color="koroleva"
-            v-model="page"
-            :length="allMembers.meta.last_page"
-          ></v-pagination>
-        </v-col>
-      </v-row> -->
       <v-row justify="center">
         <v-card v-if="member.group" class="ma-6" flat>
           <v-list-item three-line>
@@ -80,7 +47,7 @@
             <v-card-text class="text-left">
               <div class="grey--text">
                 Date:
-                <b>{{ training.date }}</b>
+                <b>{{ moment(training.date).format("DD.MM.YYYY.") }}</b>
               </div>
               <div class="grey--text">
                 Info:

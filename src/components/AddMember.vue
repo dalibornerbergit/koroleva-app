@@ -56,7 +56,6 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="member.birth_date"
-                :rules="inputRules"
                 label="Birth date"
                 prepend-icon="mdi-calendar"
                 readonly

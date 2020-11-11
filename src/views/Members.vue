@@ -1,7 +1,9 @@
 <template>
-  <div class="members">
+  <div class="members" v-if="allMembers.data">
     <v-row class="px-2">
-      <span class="title grey--text">Members</span>
+      <span class="title grey--text"
+        >Members ({{ allMembers.meta.total }})</span
+      >
       <v-spacer></v-spacer>
       <AddMember />
     </v-row>
@@ -70,7 +72,7 @@
               </div>
               <div class="grey--text">
                 Birth Date:
-                <b>{{ member.birth_date }}</b>
+                <b>{{ moment(member.birth_date).format("DD.MM.YYYY.") }}</b>
               </div>
               <div class="grey--text">
                 Record:

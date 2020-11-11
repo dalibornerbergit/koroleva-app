@@ -1,7 +1,9 @@
 <template>
-  <div class="home">
+  <div class="trainings" v-if="allTrainings.data">
     <v-row class="px-2">
-      <h1 class="title grey--text">Trainings</h1>
+      <h1 class="title grey--text">
+        Trainings ({{ allTrainings.meta.total }})
+      </h1>
       <v-spacer></v-spacer>
       <AddTraining />
     </v-row>
@@ -51,7 +53,7 @@
             <v-card-text class="text-left">
               <div class="grey--text">
                 Date:
-                <b>{{ training.date }}</b>
+                <b>{{ moment(training.date).format("DD.MM.YYYY.") }}</b>
               </div>
               <div class="grey--text">
                 Info:
