@@ -14,6 +14,7 @@
           <v-select
             prepend-icon="mdi-account-group-outline"
             :items="allGroups.data"
+            color="koroleva"
             v-model="group_id"
             label="Group"
             item-text="name"
@@ -22,6 +23,7 @@
         </v-col>
         <v-col class="py-0" cols="12" sm="6" lg="3">
           <v-text-field
+            color="koroleva"
             v-model="search"
             prepend-icon="mdi-account-search-outline"
             label="Search"

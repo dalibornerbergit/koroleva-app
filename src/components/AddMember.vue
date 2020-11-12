@@ -1,7 +1,15 @@
 <template>
   <v-dialog width="600px" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-if="memberProp" class="grey--text px-0" dark outlined text v-bind="attrs" v-on="on">
+      <v-btn
+        v-if="memberProp"
+        class="grey--text px-0"
+        dark
+        outlined
+        text
+        v-bind="attrs"
+        v-on="on"
+      >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
       <v-btn
@@ -11,7 +19,8 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-      ><v-icon left>mdi-plus</v-icon>Add new member</v-btn>
+        ><v-icon left>mdi-plus</v-icon>Add new member</v-btn
+      >
     </template>
 
     <v-card>
@@ -63,10 +72,15 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="member.birth_date" @input="menu2 = false"></v-date-picker>
+            <v-date-picker
+              v-model="member.birth_date"
+              @input="menu2 = false"
+            ></v-date-picker>
           </v-menu>
           <v-select
+            chips
             label="Group"
+            color="koroleva"
             prepend-icon="mdi-account-group-outline"
             v-model="member.group_id"
             :items="allGroups.data"
@@ -81,19 +95,21 @@
               :disabled="!valid"
               :loading="loading"
               text
-              color="info"
+              color="koroleva"
               class="mx-0 mt-3"
               @click="submitEdit(member.id)"
-            >Edit member</v-btn>
+              >Edit member</v-btn
+            >
             <v-btn
               v-else
               :disabled="!valid"
               :loading="loading"
               text
-              color="info"
+              color="koroleva"
               class="mx-0 mt-3"
               @click="submit"
-            >Add member</v-btn>
+              >Add member</v-btn
+            >
           </v-card-actions>
         </v-form>
       </v-card-text>

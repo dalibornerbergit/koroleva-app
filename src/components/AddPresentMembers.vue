@@ -22,6 +22,8 @@
         <v-select
           counter
           multiple
+          chips
+          color="koroleva"
           v-model="members"
           label="Members"
           prepend-icon="mdi-account"
@@ -31,7 +33,7 @@
         ></v-select>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="submit">Add members</v-btn>
+          <v-btn color="koroleva" text @click="submit">Add members</v-btn>
         </v-card-actions>
       </v-card-text>
     </v-card>

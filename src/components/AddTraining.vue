@@ -64,6 +64,8 @@
           ></v-textarea>
           <v-select
             label="Group"
+            chips
+            color="koroleva"
             prepend-icon="mdi-account-group-outline"
             v-model="training.group_id"
             :items="allGroups.data"
@@ -78,7 +80,7 @@
               :disabled="!valid"
               :loading="loading"
               text
-              color="info"
+              color="koroleva"
               class="mx-0 mt-3"
               @click="submitEdit(training.id)"
               >Edit training</v-btn
@@ -88,7 +90,7 @@
               :disabled="!valid"
               :loading="loading"
               text
-              color="info"
+              color="koroleva"
               class="mx-0 mt-3"
               @click="submit"
               >Add training</v-btn

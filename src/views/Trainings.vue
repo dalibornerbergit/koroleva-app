@@ -12,6 +12,7 @@
       <v-row class="mx-2">
         <v-col class="py-0" cols="12" sm="6" lg="3">
           <v-select
+            color="koroleva"
             prepend-icon="mdi-account-group-outline"
             :items="allGroups.data"
             v-model="group_id"

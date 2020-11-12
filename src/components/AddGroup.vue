@@ -38,7 +38,7 @@
               :disabled="!valid"
               :loading="loading"
               text
-              color="info"
+              color="koroleva"
               class="mx-0 mt-3"
               @click="submitEdit(group.id)"
             >Edit member</v-btn>
@@ -47,7 +47,7 @@
               :disabled="!valid"
               :loading="loading"
               text
-              color="info"
+              color="koroleva"
               class="mx-0 mt-3"
               @click="submit"
             >Add group</v-btn>
