@@ -33,6 +33,7 @@
       <v-card-text>
         <v-form class="px-3" v-model="valid">
           <v-menu
+            color="koroleva"
             v-model="menu2"
             :close-on-content-click="false"
             :nudge-right="40"
@@ -42,6 +43,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+                color="koroleva"
                 v-model="training.date"
                 :rules="inputRules"
                 label="Date"
@@ -52,12 +54,14 @@
               ></v-text-field>
             </template>
             <v-date-picker
+              color="koroleva"
               v-model="training.date"
               @input="menu2 = false"
             ></v-date-picker>
           </v-menu>
           <v-textarea
             label="Info"
+            color="koroleva"
             v-model="training.record"
             :rules="inputRules"
             prepend-icon="mdi-pencil"

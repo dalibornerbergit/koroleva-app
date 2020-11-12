@@ -1,17 +1,12 @@
   
 <template>
   <nav>
-    <!-- Snackbar -->
-    <!-- <v-snackbar v-model="snackbar" timeout="4000" top color="success">
-      Added new member
-      <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
-      </template>
-    </v-snackbar>-->
-
     <!-- Nav -->
     <v-app-bar app flat>
-      <v-app-bar-nav-icon @click="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        @click="drawer = !drawer"
+        class="grey--text"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title class="text-uppercase grey--text">
         <span>ps</span>
         <span class="font-weight-bold">koroleva</span>
@@ -27,9 +22,14 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-for="(link, index) in links" :key="index" link :to="link.route">
+            <v-list-item
+              v-for="(link, index) in links"
+              :key="index"
+              link
+              :to="link.route"
+            >
               <v-list-item-title>
-                <v-icon left>{{link.icon}}</v-icon>
+                <v-icon left>{{ link.icon }}</v-icon>
                 {{ link.text }}
               </v-list-item-title>
             </v-list-item>
@@ -37,7 +37,9 @@
         </v-menu>
       </div>
 
-      <span class="white--text d-none d-sm-flex koroleva py-1 px-2 rounded">{{user.email}}</span>
+      <span class="white--text d-none d-sm-flex koroleva py-1 px-2 rounded">{{
+        user.email
+      }}</span>
 
       <!-- Logout -->
       <div>
@@ -63,24 +65,31 @@
       </v-row>
       <v-row class="my-5" justify="center">
         <div class="ma-1">
-          <AddTraining @projectAdded="snackbar = true" />
+          <AddTraining />
         </div>
         <div class="ma-1">
-          <AddMember @projectAdded="snackbar = true" />
+          <AddMember />
         </div>
         <div class="ma-1">
-          <AddGroup @projectAdded="snackbar = true" />
+          <AddGroup />
         </div>
       </v-row>
 
       <!-- List of actions -->
       <v-list>
-        <v-list-item v-for="link in links" :key="link.text" link :to="link.route">
+        <v-list-item
+          v-for="link in links"
+          :key="link.text"
+          link
+          :to="link.route"
+        >
           <v-list-item-icon>
-            <v-icon class="white--text">{{link.icon}}</v-icon>
+            <v-icon class="white--text">{{ link.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="white--text">{{link.text}}</v-list-item-title>
+            <v-list-item-title class="white--text">{{
+              link.text
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -98,11 +107,10 @@ export default {
   components: {
     AddMember,
     AddGroup,
-    AddTraining
+    AddTraining,
   },
   data: () => ({
     drawer: false,
-    snackbar: false,
     links: [
       { icon: "mdi-shoe-ballet", text: "trainings", route: "/trainings" },
       { icon: "mdi-account", text: "members", route: "/members" },

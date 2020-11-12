@@ -31,30 +31,35 @@
       <v-card-text>
         <v-form class="px-3" v-model="valid">
           <v-text-field
+            color="koroleva"
             label="First Name"
             v-model="member.first_name"
             :rules="inputRules"
             prepend-icon="mdi-account"
           ></v-text-field>
           <v-text-field
+            color="koroleva"
             label="Last Name"
             v-model="member.last_name"
             :rules="inputRules"
             prepend-icon="mdi-account"
           ></v-text-field>
           <v-text-field
+            color="koroleva"
             label="Phone"
             v-model="member.phone"
             :rules="inputRules"
             prepend-icon="mdi-phone"
           ></v-text-field>
           <v-textarea
+            color="koroleva"
             label="Info"
             v-model="member.record"
             :rules="inputRules"
             prepend-icon="mdi-pencil"
           ></v-textarea>
           <v-menu
+            color="koroleva"
             v-model="menu2"
             :close-on-content-click="false"
             :nudge-right="40"
@@ -64,6 +69,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+                color="koroleva"
                 v-model="member.birth_date"
                 label="Birth date"
                 prepend-icon="mdi-calendar"
@@ -73,6 +79,7 @@
               ></v-text-field>
             </template>
             <v-date-picker
+              color="koroleva"
               v-model="member.birth_date"
               @input="menu2 = false"
             ></v-date-picker>

@@ -1,7 +1,15 @@
 <template>
   <v-dialog width="600px" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-if="groupProp" class="grey--text px-0" dark outlined text v-bind="attrs" v-on="on">
+      <v-btn
+        v-if="groupProp"
+        class="grey--text px-0"
+        dark
+        outlined
+        text
+        v-bind="attrs"
+        v-on="on"
+      >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
       <v-btn
@@ -11,21 +19,26 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-      ><v-icon left>mdi-plus</v-icon>Add new group</v-btn>
+        ><v-icon left>mdi-plus</v-icon>Add new group</v-btn
+      >
     </template>
 
     <v-card>
-      <v-card-title v-if="groupProp" class="title grey--text">Edit group</v-card-title>
+      <v-card-title v-if="groupProp" class="title grey--text"
+        >Edit group</v-card-title
+      >
       <v-card-title v-else class="title grey--text">Add new group</v-card-title>
       <v-card-text>
         <v-form class="px-3" v-model="valid">
           <v-text-field
+            color="koroleva"
             label="Name"
             v-model="group.name"
             :rules="inputRules"
             prepend-icon="mdi-name"
           ></v-text-field>
           <v-textarea
+            color="koroleva"
             label="Info"
             v-model="group.record"
             :rules="inputRules"
@@ -41,7 +54,8 @@
               color="koroleva"
               class="mx-0 mt-3"
               @click="submitEdit(group.id)"
-            >Edit member</v-btn>
+              >Edit member</v-btn
+            >
             <v-btn
               v-else
               :disabled="!valid"
@@ -50,7 +64,8 @@
               color="koroleva"
               class="mx-0 mt-3"
               @click="submit"
-            >Add group</v-btn>
+              >Add group</v-btn
+            >
           </v-card-actions>
         </v-form>
       </v-card-text>
