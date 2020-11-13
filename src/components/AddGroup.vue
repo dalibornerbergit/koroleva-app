@@ -19,7 +19,7 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-        ><v-icon left>mdi-plus</v-icon>Add new group</v-btn
+        ><v-icon left>mdi-plus</v-icon>Add group</v-btn
       >
     </template>
 
@@ -96,7 +96,13 @@ export default {
   methods: {
     ...mapActions(["addGroup", "updateGroup"]),
     submit() {
-      this.addGroup(this.group);
+      this.addGroup(this.group)
+        .then(() => {
+          this.$emit("success");
+        })
+        .catch(() => {
+          this.$emit("error");
+        });
       this.dialog = false;
     },
     submitEdit(id) {

@@ -1,11 +1,28 @@
 <template>
   <div class="members" v-if="allMembers.data">
+    <div class="text-center">
+      <v-snackbar
+        top
+        v-model="successSnackbar"
+        color="koroleva"
+        :timeout="timeout"
+      >
+        <b>Member added</b>
+      </v-snackbar>
+      <v-snackbar top v-model="errorSnackbar" color="grey" :timeout="timeout">
+        <b>Error</b>
+      </v-snackbar>
+    </div>
+
     <v-row class="px-2">
       <span class="title grey--text"
         >Members ({{ allMembers.meta.total }})</span
       >
       <v-spacer></v-spacer>
-      <AddMember />
+      <AddMember
+        @success="successSnackbar = true"
+        @error="errorSnackbar = true"
+      />
     </v-row>
 
     <v-container v-if="allMembers.data" class="my-5">
@@ -32,7 +49,7 @@
       </v-row>
       <v-row justify="center">
         <v-btn color="koroleva white--text" depressed @click="freshMembers">
-          <v-icon left>mdi-broom</v-icon>Remove filters</v-btn
+          <v-icon left>mdi-broom</v-icon>Clear filters</v-btn
         >
       </v-row>
       <v-row justify="center">
@@ -127,6 +144,9 @@ export default {
     page: 1,
     search: "",
     group_id: null,
+    timeout: 3000,
+    successSnackbar: false,
+    errorSnackbar: false,
   }),
   methods: {
     ...mapActions(["fetchMembers", "fetchGroups"]),
@@ -149,10 +169,10 @@ export default {
       this.fetchMembers([this.page, this.search, this.group_id]);
     },
     search: function () {
-      this.fetchMembers([this.page, this.search, this.group_id]);
+      this.fetchMembers([1, this.search, this.group_id]);
     },
     group_id: function () {
-      this.fetchMembers([this.page, this.search, this.group_id]);
+      this.fetchMembers([1, this.search, this.group_id]);
     },
   },
 };

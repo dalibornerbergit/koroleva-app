@@ -29,7 +29,6 @@ export default {
       },
     })
       .then((response) => {
-        console.log("User: ", response);
         this.$store.dispatch("user", response.data);
       })
       .catch((err) => {

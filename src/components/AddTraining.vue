@@ -19,7 +19,7 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-        ><v-icon left>mdi-plus</v-icon>Add new training</v-btn
+        ><v-icon left>mdi-plus</v-icon>Add training</v-btn
       >
     </template>
 
@@ -134,7 +134,13 @@ export default {
   methods: {
     ...mapActions(["addTraining", "fetchGroups", "updateTraining"]),
     submit() {
-      this.addTraining(this.training);
+      this.addTraining(this.training)
+        .then(() => {
+          this.$emit("success");
+        })
+        .catch(() => {
+          this.$emit("error");
+        });
       this.dialog = false;
     },
     submitEdit(id) {

@@ -63,16 +63,11 @@
           </v-avatar>
         </v-col>
       </v-row>
-      <v-row class="my-5" justify="center">
-        <div class="ma-1">
-          <AddTraining />
-        </div>
-        <div class="ma-1">
-          <AddMember />
-        </div>
-        <div class="ma-1">
-          <AddGroup />
-        </div>
+
+      <v-row class="mb-4">
+        <v-col class="text-center">
+          <span class="overline white--text">You should dance with us</span>
+        </v-col>
       </v-row>
 
       <!-- List of actions -->
@@ -99,16 +94,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import AddMember from "./AddMember";
-import AddGroup from "./AddGroup";
-import AddTraining from "./AddTraining";
 
 export default {
-  components: {
-    AddMember,
-    AddGroup,
-    AddTraining,
-  },
   data: () => ({
     drawer: false,
     links: [

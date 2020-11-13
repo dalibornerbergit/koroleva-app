@@ -19,7 +19,7 @@
         class="white--text"
         v-bind="attrs"
         v-on="on"
-        ><v-icon left>mdi-plus</v-icon>Add new member</v-btn
+        ><v-icon left>mdi-plus</v-icon>Add member</v-btn
       >
     </template>
 
@@ -125,7 +125,6 @@
 </template>
 
 <script>
-// import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -156,7 +155,13 @@ export default {
   methods: {
     ...mapActions(["addMember", "fetchGroups", "updateMember"]),
     submit() {
-      this.addMember(this.member);
+      this.addMember(this.member)
+        .then(() => {
+          this.$emit("success");
+        })
+        .catch(() => {
+          this.$emit("error");
+        });
       this.dialog = false;
     },
     submitEdit(id) {

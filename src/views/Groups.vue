@@ -1,9 +1,26 @@
 <template>
   <div class="groups" v-if="allGroups.data">
+    <div class="text-center">
+      <v-snackbar
+        top
+        v-model="successSnackbar"
+        color="koroleva"
+        :timeout="timeout"
+      >
+        <b>Group added</b>
+      </v-snackbar>
+      <v-snackbar top v-model="errorSnackbar" color="grey" :timeout="timeout">
+        <b>Error</b>
+      </v-snackbar>
+    </div>
+
     <v-row class="px-2">
       <h1 class="title grey--text">Groups ({{ allGroups.data.length }})</h1>
       <v-spacer></v-spacer>
-      <AddGroup />
+      <AddGroup
+        @success="successSnackbar = true"
+        @error="errorSnackbar = true"
+      />
     </v-row>
 
     <v-container v-if="allGroups.data" class="my-5">
@@ -73,6 +90,9 @@ export default {
   },
   data: () => ({
     showMembers: false,
+    timeout: 3000,
+    successSnackbar: false,
+    errorSnackbar: false,
   }),
   methods: {
     ...mapActions(["fetchGroups"]),

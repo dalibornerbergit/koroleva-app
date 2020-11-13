@@ -69,8 +69,7 @@ export default {
       Api.post(`presence`, {
         training_id: this.training_id,
         members: this.members,
-      }).then((response) => {
-        console.log(response);
+      }).then(() => {
         this.dialog = false;
         this.fetchTrainings([this.page, null]);
       });

@@ -1,11 +1,28 @@
 <template>
   <div class="trainings" v-if="allTrainings.data">
+    <div class="text-center">
+      <v-snackbar
+        top
+        v-model="successSnackbar"
+        color="koroleva"
+        :timeout="timeout"
+      >
+        <b>Training added</b>
+      </v-snackbar>
+      <v-snackbar top v-model="errorSnackbar" color="grey" :timeout="timeout">
+        <b>Error</b>
+      </v-snackbar>
+    </div>
+
     <v-row class="px-2">
       <h1 class="title grey--text">
         Trainings ({{ allTrainings.meta.total }})
       </h1>
       <v-spacer></v-spacer>
-      <AddTraining />
+      <AddTraining
+        @success="successSnackbar = true"
+        @error="errorSnackbar = true"
+      />
     </v-row>
 
     <v-container v-if="allTrainings.data" class="my-5">
@@ -24,7 +41,7 @@
       </v-row>
       <v-row justify="center">
         <v-btn color="koroleva white--text" depressed @click="freshTrainings"
-          ><v-icon left>mdi-broom</v-icon>Remove filters</v-btn
+          ><v-icon left>mdi-broom</v-icon>Clear filters</v-btn
         >
       </v-row>
       <v-row justify="center">
@@ -127,6 +144,9 @@ export default {
     member_id: null,
     group_id: null,
     showMembers: false,
+    timeout: 3000,
+    successSnackbar: false,
+    errorSnackbar: false,
   }),
   methods: {
     ...mapActions(["fetchTrainings", "fetchGroups", "deleteTraining"]),
@@ -147,9 +167,8 @@ export default {
       this.fetchTrainings([this.page, this.group_id]);
     },
     group_id: function () {
-      this.fetchTrainings([this.page, this.group_id]);
+      this.fetchTrainings([1, this.group_id]);
     },
-    member_id: function () {},
   },
 };
 </script>
