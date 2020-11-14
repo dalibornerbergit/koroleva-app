@@ -18,14 +18,10 @@ const actions = {
     async addMember({ commit }, member) {
         const response = await Api.post('members', member)
 
-        console.log(response)
-
         commit('newMember', response.data.data)
     },
     async updateMember({ commit }, member) {
         const response = await Api.put(`members/${member.id}`, member)
-
-        console.log(response.data.data)
 
         commit('updatedMember', response.data.data)
     },
@@ -41,8 +37,6 @@ const mutations = {
     newMember: (state, member) => state.members.data.unshift(member),
     updatedMember: (state, updMember) => {
         const index = state.members.data.findIndex(member => member.id === updMember.id)
-
-        console.log(updMember)
 
         if (index !== -1) {
             state.members.data.splice(index, 1, updMember)

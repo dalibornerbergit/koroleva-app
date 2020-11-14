@@ -151,7 +151,10 @@ export default {
         group_id: this.training.group_id,
       };
 
-      this.updateTraining(updTraining);
+      this.updateTraining(updTraining).then(() => {
+        this.$emit("editSuccess");
+      });
+
       this.dialog = false;
     },
   },
