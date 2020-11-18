@@ -44,7 +44,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 color="koroleva"
-                v-model="training.date"
+                v-model="formattedDate"
                 :rules="inputRules"
                 label="Date"
                 prepend-icon="mdi-calendar"
@@ -115,7 +115,7 @@ export default {
   },
   data: () => ({
     training: {
-      date: "",
+      date: null,
       record: "",
       group_id: null,
     },
@@ -127,6 +127,11 @@ export default {
   }),
   computed: {
     ...mapGetters(["allGroups"]),
+    formattedDate() {
+      if (this.training.date)
+        return this.moment(this.training.date).format("DD.MM.YYYY.");
+      else return null;
+    },
   },
   created() {
     if (this.trainingProp) this.training = this.trainingProp;
@@ -160,6 +165,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

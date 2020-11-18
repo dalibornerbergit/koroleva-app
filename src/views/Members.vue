@@ -114,9 +114,6 @@
                 >
                 <v-spacer></v-spacer>
                 <DeleteDialog :memberId="member.id" type="member" />
-                <!-- <v-btn @click="deleteMember(member.id)" text color="grey">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn> -->
               </v-card-actions>
             </v-card>
           </v-col>

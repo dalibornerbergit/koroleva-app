@@ -70,7 +70,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 color="koroleva"
-                v-model="member.birth_date"
+                v-model="formattedDate"
                 label="Birth date"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -148,6 +148,11 @@ export default {
   }),
   computed: {
     ...mapGetters(["allGroups"]),
+    formattedDate() {
+      if (this.member.birth_date)
+        return this.moment(this.member.birth_date).format("DD.MM.YYYY.");
+      else return null;
+    },
   },
   created() {
     if (this.memberProp) this.member = this.memberProp;
