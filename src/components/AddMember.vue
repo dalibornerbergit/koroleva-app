@@ -136,7 +136,7 @@ export default {
       first_name: "",
       last_name: "",
       phone: "",
-      record: "",
+      record: ".",
       birth_date: null,
       group_id: null,
     },

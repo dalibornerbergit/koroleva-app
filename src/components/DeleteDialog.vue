@@ -25,7 +25,7 @@
           v-if="type === 'member'"
           color="red darken-1"
           text
-          @click="deleteMember(memberId)"
+          @click="removeMember"
         >
           Delete member
         </v-btn>
@@ -57,6 +57,11 @@ export default {
   }),
   methods: {
     ...mapActions(["deleteTraining", "deleteMember", "deleteGroup"]),
+    removeMember() {
+      this.deleteMember(this.memberId).then(() => {
+        this.$emit("delete");
+      });
+    },
   },
 };
 </script>

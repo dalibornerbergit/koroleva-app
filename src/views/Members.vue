@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center mt-10" v-if="!allMembers.data">
+    <div class="text-center mt-20" v-if="!allMembers.data">
       <v-progress-circular indeterminate color="koroleva"></v-progress-circular>
     </div>
     <div class="members" v-else>
@@ -16,6 +16,14 @@
         <v-snackbar top v-model="errorSnackbar" color="grey" :timeout="timeout">
           <b>Error</b>
         </v-snackbar>
+        <v-snackbar
+          top
+          v-model="deleteSnackbar"
+          color="grey"
+          :timeout="timeout"
+        >
+          <b>Member deleted</b>
+        </v-snackbar>
       </div>
 
       <v-row class="px-2">
@@ -23,10 +31,7 @@
           >Members ({{ allMembers.meta.total }})</span
         >
         <v-spacer></v-spacer>
-        <AddMember
-          @success="successSnackbar = true"
-          @error="errorSnackbar = true"
-        />
+        <AddMember @success="memberAdded" @error="errorSnackbar = true" />
       </v-row>
 
       <v-container class="my-5">
@@ -95,10 +100,13 @@
                 </div>
                 <div class="grey--text">
                   Birth Date:
-                  <b>{{ moment(member.birth_date).format("DD.MM.YYYY.") }}</b>
+                  <b v-if="member.birth_date">{{
+                    moment(member.birth_date).format("DD.MM.YYYY.")
+                  }}</b>
+                  <b class="koroleva--text" v-else>Missing date</b>
                 </div>
                 <div class="grey--text">
-                  Record:
+                  Info:
                   <b>{{ member.record }}</b>
                 </div>
                 <div class="grey--text">
@@ -113,7 +121,11 @@
                   ><v-icon>mdi-human-female-dance</v-icon></v-btn
                 >
                 <v-spacer></v-spacer>
-                <DeleteDialog :memberId="member.id" type="member" />
+                <DeleteDialog
+                  type="member"
+                  :memberId="member.id"
+                  @delete="removeMember"
+                />
               </v-card-actions>
             </v-card>
           </v-col>
@@ -148,17 +160,26 @@ export default {
     group_id: null,
     timeout: 3000,
     successSnackbar: false,
+    deleteSnackbar: false,
     errorSnackbar: false,
   }),
   methods: {
     ...mapActions(["fetchMembers", "fetchGroups"]),
     freshMembers() {
-      this.fetchMembers([this.page, "", null]);
+      this.fetchMembers([this.page, this.search, null]);
       this.search = "";
       this.group_id = null;
     },
     showTrainings(id) {
       this.$router.push("/members/" + id);
+    },
+    memberAdded() {
+      this.successSnackbar = true;
+      this.allMembers.meta.total++;
+    },
+    removeMember() {
+      this.deleteSnackbar = true;
+      this.allMembers.meta.total--;
     },
   },
   computed: mapGetters(["allMembers", "allGroups"]),

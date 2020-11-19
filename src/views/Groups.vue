@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center mt-10" v-if="!allGroups.data">
+    <div class="text-center mt-20" v-if="!allGroups.data">
       <v-progress-circular indeterminate color="koroleva"></v-progress-circular>
     </div>
     <div class="groups" v-else>

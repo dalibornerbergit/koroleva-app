@@ -28,7 +28,7 @@
           label="Members"
           prepend-icon="mdi-account"
           :items="allMembers.data"
-          item-text="first_name"
+          :item-text="displayMember"
           item-value="id"
         ></v-select>
         <v-card-actions>
@@ -73,6 +73,9 @@ export default {
         this.dialog = false;
         this.fetchTrainings([this.page, null]);
       });
+    },
+    displayMember(item) {
+      return `${item.first_name} ${item.last_name}`;
     },
   },
   watch: {
