@@ -82,7 +82,8 @@
             <v-card flat class="text-center ma-3">
               <div>
                 <v-avatar color="koroleva" class="mt-4" size="50">
-                  <img src="/koroleva-circle-rmbg.png" alt="INF" />
+                  <v-icon dark> mdi-account </v-icon>
+                  <!-- <img src="/koroleva-circle-rmbg.png" alt="INF" /> -->
                 </v-avatar>
               </div>
               <v-card-text class="text-left">
@@ -195,9 +196,9 @@ export default {
       this.allMembers.meta.total--;
     },
     openDeleteDialog(id) {
-      this.deleteDialog = true
+      this.deleteDialog = true;
       this.deleteMemberId = id;
-    }
+    },
   },
   computed: mapGetters(["allMembers", "allGroups"]),
   created() {

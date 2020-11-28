@@ -74,7 +74,6 @@ export default {
         password: this.password,
       })
         .then((response) => {
-          console.log("Login", response);
           this.loading = false;
           this.error = false;
           localStorage.setItem("accessToken", response.data.accessToken);
