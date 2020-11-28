@@ -13,6 +13,14 @@
         >
           <b>Training added</b>
         </v-snackbar>
+        <v-snackbar
+          top
+          v-model="deleteSnackbar"
+          color="grey"
+          :timeout="timeout"
+        >
+          <b>Training deleted</b>
+        </v-snackbar>
         <v-snackbar top v-model="errorSnackbar" color="grey" :timeout="timeout">
           <b>Error</b>
         </v-snackbar>
@@ -24,7 +32,7 @@
         </h1>
         <v-spacer></v-spacer>
         <AddTraining
-          @success="successSnackbar = true"
+          @success="trainingAdded"
           @error="errorSnackbar = true"
         />
       </v-row>
@@ -114,10 +122,9 @@
                   :presentMembers="training.members"
                 />
                 <v-spacer></v-spacer>
-                <DeleteDialog :trainingId="training.id" type="training" />
-                <!-- <v-btn @click="deleteTraining(training.id)" text color="grey">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn> -->
+                <v-btn @click="openDeleteDialog(training.id)" text color="grey">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -131,6 +138,16 @@
             ></v-pagination>
           </v-col>
         </v-row>
+
+        <!-- Dialogs -->
+        <v-dialog max-width="290" v-model="deleteDialog">
+          <DeleteDialog
+            type="training"
+            :trainingId="deleteTrainingId"
+            @trainingDeleted="removeTraining"
+            @close-dialog="deleteDialog = false"
+          />
+        </v-dialog>
       </v-container>
     </div>
   </div>
@@ -149,12 +166,15 @@ export default {
     DeleteDialog,
   },
   data: () => ({
+    deleteDialog: false,
+    deleteTrainingId: null,
     page: 1,
     member_id: null,
     group_id: null,
     showMembers: false,
     timeout: 3000,
     successSnackbar: false,
+    deleteSnackbar: false,
     errorSnackbar: false,
   }),
   methods: {
@@ -162,6 +182,20 @@ export default {
     freshTrainings() {
       this.fetchTrainings([this.page, null]);
       this.group_id = null;
+    },
+    trainingAdded() {
+      this.successSnackbar = true;
+      this.allTrainings.meta.total++;
+    },
+    openDeleteDialog(id) {
+      this.deleteDialog = true;
+      this.deleteTrainingId = id;
+    },
+    removeTraining() {
+      this.deleteTrainingId = null;
+      this.deleteDialog = false;
+      this.deleteSnackbar = true;
+      this.allTrainings.meta.total--;
     },
   },
   computed: {

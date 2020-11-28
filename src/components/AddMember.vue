@@ -163,11 +163,11 @@ export default {
       this.addMember(this.member)
         .then(() => {
           this.$emit("success");
+          this.dialog = false;
         })
         .catch(() => {
           this.$emit("error");
         });
-      this.dialog = false;
     },
     submitEdit(id) {
       const updMember = {

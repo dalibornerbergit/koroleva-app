@@ -13,6 +13,14 @@
         >
           <b>Group added</b>
         </v-snackbar>
+        <v-snackbar
+          top
+          v-model="deleteSnackbar"
+          color="grey"
+          :timeout="timeout"
+        >
+          <b>Group deleted</b>
+        </v-snackbar>
         <v-snackbar top v-model="errorSnackbar" color="grey" :timeout="timeout">
           <b>Error</b>
         </v-snackbar>
@@ -71,14 +79,23 @@
               <v-card-actions>
                 <AddGroup :groupProp="group" />
                 <v-spacer></v-spacer>
-                <DeleteDialog :groupId="group.id" type="group" />
-                <!-- <v-btn @click="deleteGroup(group.id)" text color="grey">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn> -->
+                <v-btn @click="openDeleteDialog(group.id)" text color="grey">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
+
+        <!-- Dialogs -->
+        <v-dialog max-width="290" v-model="deleteDialog">
+          <DeleteDialog
+            type="group"
+            :groupId="deleteGroupId"
+            @groupDeleted="removeGroup"
+            @close-dialog="deleteDialog = false"
+          />
+        </v-dialog>
       </v-container>
     </div>
   </div>
@@ -95,6 +112,9 @@ export default {
     DeleteDialog,
   },
   data: () => ({
+    deleteDialog: false,
+    deleteGroupId: false,
+    deleteSnackbar: false,
     showMembers: false,
     timeout: 3000,
     successSnackbar: false,
@@ -102,6 +122,15 @@ export default {
   }),
   methods: {
     ...mapActions(["fetchGroups"]),
+    openDeleteDialog(id) {
+      this.deleteDialog = true
+      this.deleteGroupId = id;
+    },
+    removeGroup() {
+      this.deleteGroupId = null;
+      this.deleteDialog = false;
+      this.deleteSnackbar = true;
+    },
   },
   computed: mapGetters(["allGroups"]),
   created() {

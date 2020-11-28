@@ -121,11 +121,9 @@
                   ><v-icon>mdi-human-female-dance</v-icon></v-btn
                 >
                 <v-spacer></v-spacer>
-                <DeleteDialog
-                  type="member"
-                  :memberId="member.id"
-                  @delete="removeMember"
-                />
+                <v-btn @click="openDeleteDialog(member.id)" text color="grey">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -139,6 +137,17 @@
             ></v-pagination>
           </v-col>
         </v-row>
+
+        <!-- Dialogs -->
+
+        <v-dialog max-width="290" v-model="deleteDialog">
+          <DeleteDialog
+            type="member"
+            :memberId="deleteMemberId"
+            @memberDeleted="removeMember"
+            @close-dialog="deleteDialog = false"
+          />
+        </v-dialog>
       </v-container>
     </div>
   </div>
@@ -155,6 +164,8 @@ export default {
     DeleteDialog,
   },
   data: () => ({
+    deleteMemberId: null,
+    deleteDialog: false,
     page: 1,
     search: "",
     group_id: null,
@@ -178,9 +189,15 @@ export default {
       this.allMembers.meta.total++;
     },
     removeMember() {
+      this.deleteMemberId = null;
+      this.deleteDialog = false;
       this.deleteSnackbar = true;
       this.allMembers.meta.total--;
     },
+    openDeleteDialog(id) {
+      this.deleteDialog = true
+      this.deleteMemberId = id;
+    }
   },
   computed: mapGetters(["allMembers", "allGroups"]),
   created() {
